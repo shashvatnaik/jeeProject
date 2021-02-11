@@ -1,5 +1,4 @@
 package com.shashvat.jeeProject;
-
 import java.io.IOException;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -10,14 +9,14 @@ import javax.servlet.http.HttpServletResponse;
 
 
 /* Servlet implementation class TestServlet*/
-@WebServlet(description = "test servlet - first servlet", urlPatterns = { "/app" })
-public class App extends HttpServlet {
+@WebServlet(description = "user controller", urlPatterns = { "/user" })
+public class UserController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public App() {
+    public UserController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -33,26 +32,20 @@ public class App extends HttpServlet {
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		System.out.println("hello from servlet - get method");
-		response.getWriter().print("hello from servlet - get method ");
-		response.getWriter().append("Served at: ").append(request.getContextPath());
-	}
+	// protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	// 	// TODO Auto-generated method stub
+	// 	System.out.println("hello from servlet - get method");
+	// 	response.getWriter().print("hello from servlet - get method ");
+	// 	response.getWriter().append("Served at: ").append(request.getContextPath());
+	// }
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		//doGet(request, response);
-		System.out.println("inside post"+request.getParameter("type"));
-		if(request.getParameter("type").equals("register")){
-			System.out.println("inside post-register");
-			User newUser = new User(request.getParameter("username"), request.getParameter("mobile"), request.getParameter("email"), request.getParameter("password"));
-			newUser.registerUser();
-		}
-
+		doGet(request, response);
+		System.out.println("register method - gg value is "+request.getParameter("username"));
 	}
 
 }

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" id="WebApp_ID" version="3.0">
+  <display-name>jeeApp</display-name>
+  <welcome-file-list>
+    <welcome-file>index.jsp</welcome-file>
+    <welcome-file>index.html</welcome-file>
+  </welcome-file-list>
+  <!-- <servlet>
+    <servlet-name>shashvat</servlet-name>
+    <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+  </servlet> -->
+  <!-- <servlet-mapping>
+    <servlet-name>shashvat</servlet-name>
+    <url-pattern>/</url-pattern>
+  </servlet-mapping> -->
+
+  <servlet>
+    <servlet-name>registerPage</servlet-name>
+    <jsp-file>/views/register.jsp</jsp-file>
+</servlet>
+<!--mapping-->
+<servlet-mapping>
+    <servlet-name>registerPage</servlet-name>
+    <url-pattern>/register</url-pattern>   
+</servlet-mapping>
+
+<error-page>
+		<exception-type>java.lang.Exception</exception-type>
+		<location>/Error.jsp</location>
+	</error-page>
+</web-app>
