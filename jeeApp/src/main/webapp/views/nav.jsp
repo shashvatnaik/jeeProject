@@ -309,65 +309,103 @@
 </script>
 </head>
 <body>
-    <nav class="navbar navbar navbar-expand-lg bg-light">
+    <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #198754;">
         <div class="container-fluid">
-
+            
             <% if(request.getParameter("route").equals("close")) {%>
-                <ul class="nav navbar-nav navbar-left">
-                    <span style="font-size: 30px; cursor: pointer; color: grey;"
+                <ul class="nav nav-item navbar-left dropdown">
+                    <span style="font-size: 30px; cursor: pointer; color: #293042;"
                     onmouseover="openNav()">&#9776;</span>
-                    <div onmouseleave="closeNav()" id="mySidenav" class="sidenav">
+                    <a class="navbar-brand" style="margin-left: 10px;" href="/">Notifier</a>
+                    <div onmouseleave="closeNav()" id="mySidenav" class="sidenav" style="background-color: #293042;">
                         <a href="javascript:void(0)" class="closebtn" id="closeNav" onclick="closeNav()">&times;</a>
                         <h3 style="color: white;">Hi ${user.getUserName() }</h3>
+                        <li><hr class="dropdown-divider"></li>
                         <a id="noteBookView" href="noteBookList.do">NoteBooks</a> 
+                        <li><hr class="dropdown-divider"></li>
                         <a id="listOfNotes" href="listAllNotes.do">Notes</a> 
+                        <li><hr class="dropdown-divider"></li>
                         <a id="editUser" href="editUser.do">Edit User</a>
+                        <li><hr class="dropdown-divider"></li>
                     </div>
                 </ul>
+            <% } else { %>
+                <a class="navbar-brand" href="/">Notifier</a>
             <% } %>
 
-            <a class="navbar-brand" href="/">Notifier</a>
+            
 
-            <ul class="nav navbar-nav navbar-right d-flex">
-                <li><a id="logout" href="logout"><span
-                        class="glyphicon glyphicon-log-in"></span> Logout</a></li>
-            </ul>
-    
-            <ul class="nav navbar-nav navbar-right">
-                <li class="dropdown">
-                <a href="#" class="dropdown-toggle glyphicon glyphicon-bell notify"
-                    data-toggle="dropdown" role="button" aria-haspopup="true"
-                    onclick="notificationFunction()" aria-expanded="false"
-                    style="color: white;">
-                    <span class="badge">${countRemainder}</span>
-                </a>
-                
-                    <ul class="dropdown-menu notify-drop">
-                        <div class="notify-drop-title">
-                            <div class="row">
-                                <div class="col-md-6 col-sm-6 col-xs-6">
-                                    <h4>Reminder </h4>
-                                </div>
-                                
-                            </div>
-                        </div>
-                        <div class="drop-content">
-                            <li>
-                                <div id="notification" >
-                                    
-                                </div>
-                            </li>
-                        </div>
-                        </ul>
-            </li>
-            </ul>
+            <% if(request.getParameter("route").equals("close")) {%>
+            <ul class="nav nav-item d-flex gap-2">
             
-            <ul class="nav navbar-nav navbar-right d-flex">
-            
-                <li><a  id="addNewNote" href="addNotes.do" data-toggle="modal"
-                    data-target="#myModal" style="visibility: ${ui}">NEW NOTE</a></li>
+                <li style="margin-left: 10px;">
+                    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                        Add New Note
+                      </button>
+                </li>
+                    
+                <li class="dropdown" style="margin-left: 10px;">
+                        <button href="#" class="dropdown-toggle noAnchor btn btn-success"
+                            data-toggle="dropdown" role="button" aria-haspopup="true"
+                            onclick="notificationFunction()" aria-expanded="false"
+                            style="color: white;">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bell" viewBox="0 0 16 16">
+                                <path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zM8 1.918l-.797.161A4.002 4.002 0 0 0 4 6c0 .628-.134 2.197-.459 3.742-.16.767-.376 1.566-.663 2.258h10.244c-.287-.692-.502-1.49-.663-2.258C12.134 8.197 12 6.628 12 6a4.002 4.002 0 0 0-3.203-3.92L8 1.917zM14.22 12c.223.447.481.801.78 1H1c.299-.199.557-.553.78-1C2.68 10.2 3 6.88 3 6c0-2.42 1.72-4.44 4.005-4.901a1 1 0 1 1 1.99 0A5.002 5.002 0 0 1 13 6c0 .88.32 4.2 1.22 6z"/>
+                            </svg>
+                            <!-- <span class="badge">${countRemainder}</span> -->
+                        </a>
+                </li>
+                <li style="margin-left: 10px;">
+                    <button class="noAnchor btn btn-success" id="logout" href="logout" onclick="location.href='logout'">
+                        Logout
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-right" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd" d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0v2z"/>
+                            <path fill-rule="evenodd" d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z"/>
+                          </svg>
+                    </a>
+                </li>
+                    
             </ul>
+            <% } %>
         </div>
     </nav>
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <form action="/noteBook" method="POST">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Add Notebook</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <label for="email" class="col-sm-6 col-form-label">Notebook Name:</label>
+                    <div class="col-sm-10">
+                        <input type="hidden" name="type" value="addNoteBook">
+                        <input type="text" class="form-control" id="notBookName" name="noteBookName" placeholder="enter new notebook's name" required>
+                    </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-primary">Save changes</button>
+            </div>
+          </div>
+        </div>
+        </form>
+      </div>
+
+      <% if(session.getAttribute("errorMessage") != null && session.getAttribute("errorMessage") != "") { %>
+          <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 5">
+            <div class="toast show" role="alert" aria-live="assertive" aria-atomic="true" id="toast">
+                <div class="toast-header">
+                <strong class="me-auto">Notification</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close" onclick="document.getElementById('toast').classList.remove('show')"></button>
+                </div>
+                <div class="toast-body">
+                    <%=session.getAttribute("errorMessage")%>
+                </div>
+            </div>
+        </div>
+        <% session.setAttribute("errorMessage", null); %>
+    <% } %>
 </body>
 </html>

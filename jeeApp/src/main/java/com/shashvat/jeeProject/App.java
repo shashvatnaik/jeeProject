@@ -7,7 +7,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;  
+import javax.servlet.http.HttpSession;
 import java.sql.*;
 
 
@@ -51,10 +51,14 @@ public class App extends HttpServlet {
 		if(request.getParameter("type").equals("register")){
 			System.out.println("inside post-register");
 			User newUser = new User(request.getParameter("username"), request.getParameter("mobile"), request.getParameter("email"), request.getParameter("password"));
-			if(newUser.registerUser()){
+			int result = newUser.registerUser();
+			if(result == 1){
 				System.out.println("New User Added: "+request.getParameter("email"));
 				request.setAttribute("message", "Registration Successfull!");
 				request.getServletContext().getRequestDispatcher("/index.jsp").forward(request, response);
+			} else if(result == 0) {
+				request.setAttribute("message", "User with the email already exists!");
+				request.getServletContext().getRequestDispatcher("/register").forward(request, response);
 			} else {
 				System.out.println("error in registering the user");
 				response.sendRedirect("/register");
@@ -65,19 +69,24 @@ public class App extends HttpServlet {
 				Connection conn = dbUtil.getConnection();
 				PreparedStatement pst = conn.prepareStatement("select * from user where email='"+request.getParameter("email")+"' and password='"+request.getParameter("password")+"';");
 				ResultSet rs = pst.executeQuery();
-				int count = 0;
-				String email="";
+				int count = 0, id=0;
+				String email="", uname="", mobileNumber="";
 				while(rs.next()){
 					System.out.println("Login Successful");
 					count++;
 					email=rs.getString("email");
+					uname=rs.getString("userName");
+					mobileNumber=rs.getString("mobileNumber");
+					id=rs.getInt("id");
 				}
 				if(count == 1){
-					request.setAttribute("userEmail", email);
-					response.sendRedirect(request.getContextPath() + "/home");
+					HttpSession session=request.getSession();
+        			session.setAttribute("uid", id);
+					session.setAttribute("uname", uname);
+					session.setAttribute("umobile", mobileNumber);
+					session.setAttribute("uemail", email);
 
-					HttpSession session=request.getSession();  
-        			session.setAttribute("userEmail",email);  
+					response.sendRedirect(request.getContextPath() + "/home");
 				} else {
 					request.setAttribute("message", "Email or Password is wrong.");
 					request.getServletContext().getRequestDispatcher("/index.jsp").forward(request, response);

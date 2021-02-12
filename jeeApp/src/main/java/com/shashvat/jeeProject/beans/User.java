@@ -57,22 +57,34 @@ public class User {
         this.mobile = mobile;
     }
 
-    public boolean registerUser(){
+    public int registerUser(){
         JDBCUtils dbUtil = new JDBCUtils();
         Connection conn = dbUtil.getConnection();
         System.out.println("inside user class register method = "+this.email+this.mobile);
         try{
-            PreparedStatement st1 = conn.prepareStatement("insert into user values(?, ?, ?, ?, ?);");
-            st1.setString(1, null);
-            st1.setString(2, this.email);
-            st1.setString(3, this.mobile);
-            st1.setString(4, this.password);
-            st1.setString(5, this.username);
-            return 1 == st1.executeUpdate();
+            PreparedStatement pst = conn.prepareStatement("select * from user where email='"+this.email+"';");
+            ResultSet rs = pst.executeQuery();
+            int count = 0;
+            while(rs.next()){
+                System.out.println("Login Successful");
+                count++;
+            }
+
+            if(count>0){
+                return 0;
+            } else {
+                PreparedStatement st1 = conn.prepareStatement("insert into user values(?, ?, ?, ?, ?);");
+                st1.setString(1, null);
+                st1.setString(2, this.email);
+                st1.setString(3, this.mobile);
+                st1.setString(4, this.password);
+                st1.setString(5, this.username);
+                return st1.executeUpdate();
+            }
             
         } catch(Exception e){
             e.printStackTrace();
-            return false;
+            return -1;
         }
     }
 

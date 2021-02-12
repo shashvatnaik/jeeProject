@@ -11,36 +11,46 @@
 	<jsp:include page="views/nav.jsp" >
 		<jsp:param name="route" value="open" />
 	</jsp:include>
-	<% if(session.getAttribute("userEmail") != null) { 
-		response.sendRedirect("/home");
-		System.out.println(session.getAttribute("userEmail"));
-	}
-		
+	<% 
+		if(session.getAttribute("uid") != null) { 
+			response.sendRedirect("/home");
+			System.out.println(session.getAttribute("userEmail"));
+		}
 	%>
 		
 
 </head>
 <center>
 	<body style="background-color:#fafafa;">
-		<div class="card" style="width: 22rem;">
+		<h2 style="color: #062f4f; margin-top: 2rem;">Login</h2>
+		<div class="card" style="width: 22rem; top:5rem;">
 			<form action="/app"  method="post">
 				<% if(request.getAttribute("message") != null){ %>
 					<div id="email_error" class="alert alert-danger" role="alert"><%=request.getAttribute("message")%></div></td></tr>
 				<% } %>
 				<div class="form-group">
 					<input type="hidden" name="type" value="login" />
-					<label for="exampleInputEmail1">Email address</label>
+					<label for="exampleInputEmail1" class="txtColor">Email address</label>
 					<input type="email" class="form-control" id="exampleInputEmail1" name="email" aria-describedby="emailHelp" placeholder="Enter email">
 				</div>
 				<div class="form-group">
-					<label for="exampleInputPassword1">Password</label>
+					<label for="exampleInputPassword1" class="txtColor">Password</label>
 					<input type="password" class="form-control" id="exampleInputPassword1" name="password" placeholder="Password">
 				</div>
-				<button type="submit" class="btn btn-outline-primary">Submit</button>
+				<div class="d-grid gap-2 " style="margin-top: 20px;">
+					<button type="submit" class="btn btn-outline-success">Login</button>
+					<button type="button" class="btn btn-outline-success" onclick="gotoReg()">Sign up</button>
+				</div>
 			</form>
-			<a href="/register"><button type="button" class="btn btn-outline-success">Sign up</button>
 		</div>
 	</body>
 </center>
+
+<script>
+	function gotoReg() {
+		location.href="/register";
+	}
+</script>
+
 </html>
 

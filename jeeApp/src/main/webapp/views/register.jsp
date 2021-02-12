@@ -6,12 +6,26 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
         <link rel="stylesheet" href="main.css">
+
+        <jsp:include page="views/nav.jsp" >
+		<jsp:param name="route" value="open" />
+	</jsp:include>
+	<% if(session.getAttribute("uid") != null) { 
+		response.sendRedirect("/home");
+		System.out.println(session.getAttribute("uid"));
+	}
+		
+	%>
+
     </head>
     <body style="background-color:#fafafa;">
-        <div class="card">
+    <center>
+        <div class="card" style="width: 60rem; top:6rem;">
         <form action="/app"  method="POST">
             <input type="hidden" name="type" value="register" />
-            
+                <% if(request.getAttribute("message") != null){ %>
+                    <div id="email_error" class="alert alert-danger" role="alert"><%=request.getAttribute("message")%></div></td></tr>
+                <% } %>
                 <div class="mb-3 row">
                     <label for="email" class="col-sm-2 col-form-label">Email</label>
                     <div class="col-sm-10">
@@ -42,11 +56,12 @@
                         <input type="password" class="form-control" name="confirmPassword" id="confirmPassword">
                     </div>
                 </div>
-                <input type="submit" class="btn btn-outline-success" />
+                <button type="submit" class="btn btn-outline-success" > Register </button>
                 <a href="/"><button type="button" class="btn btn-outline-primary">Cancel</button>
             
             
         </form>
     </div>
-    </body>
+</center>
+</body>
 </html>
