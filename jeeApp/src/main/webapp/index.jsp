@@ -7,22 +7,34 @@
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
 	<link rel="stylesheet" href="main.css">
-<title>RemindMe</title>
+	<title>RemindMe</title>
+	<jsp:include page="views/nav.jsp" >
+		<jsp:param name="route" value="open" />
+	</jsp:include>
+	<% if(session.getAttribute("userEmail") != null) { 
+		response.sendRedirect("/home");
+		System.out.println(session.getAttribute("userEmail"));
+	}
+		
+	%>
+		
 
 </head>
 <center>
 	<body style="background-color:#fafafa;">
 		<div class="card" style="width: 22rem;">
-			<form action="/app"  method="post"  onsubmit="return validateUser()">
-				<div id="email_error" class="alert alert-danger" role="alert">Email Id cannot be empty</div></td></tr>
+			<form action="/app"  method="post">
+				<% if(request.getAttribute("message") != null){ %>
+					<div id="email_error" class="alert alert-danger" role="alert"><%=request.getAttribute("message")%></div></td></tr>
+				<% } %>
 				<div class="form-group">
-				<label for="exampleInputEmail1">Email address</label>
-				<input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
-				<small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+					<input type="hidden" name="type" value="login" />
+					<label for="exampleInputEmail1">Email address</label>
+					<input type="email" class="form-control" id="exampleInputEmail1" name="email" aria-describedby="emailHelp" placeholder="Enter email">
 				</div>
 				<div class="form-group">
-				<label for="exampleInputPassword1">Password</label>
-				<input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+					<label for="exampleInputPassword1">Password</label>
+					<input type="password" class="form-control" id="exampleInputPassword1" name="password" placeholder="Password">
 				</div>
 				<button type="submit" class="btn btn-outline-primary">Submit</button>
 			</form>

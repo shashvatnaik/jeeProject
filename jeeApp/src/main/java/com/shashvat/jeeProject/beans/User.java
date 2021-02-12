@@ -47,21 +47,33 @@ public class User {
         return email;
     }
     public void setEmail(String email) {
-        this.email=email;
+        this.email = email;
     }
 
     public String getMobile() {
         return mobile;
     }
-    public void setMobile(String mobileNumber) {
+    public void setMobile(String mobile) {
         this.mobile = mobile;
     }
 
     public boolean registerUser(){
         JDBCUtils dbUtil = new JDBCUtils();
         Connection conn = dbUtil.getConnection();
-        System.out.println("inside user class register method");
-        return true;
+        System.out.println("inside user class register method = "+this.email+this.mobile);
+        try{
+            PreparedStatement st1 = conn.prepareStatement("insert into user values(?, ?, ?, ?, ?);");
+            st1.setString(1, null);
+            st1.setString(2, this.email);
+            st1.setString(3, this.mobile);
+            st1.setString(4, this.password);
+            st1.setString(5, this.username);
+            return 1 == st1.executeUpdate();
+            
+        } catch(Exception e){
+            e.printStackTrace();
+            return false;
+        }
     }
 
 }

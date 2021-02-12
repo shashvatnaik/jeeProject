@@ -8,43 +8,45 @@
         <link rel="stylesheet" href="main.css">
     </head>
     <body style="background-color:#fafafa;">
+        <div class="card">
         <form action="/app"  method="POST">
             <input type="hidden" name="type" value="register" />
-            <div class="card">
+            
                 <div class="mb-3 row">
                     <label for="email" class="col-sm-2 col-form-label">Email</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" id="email" required>
+                        <input type="text" class="form-control" id="email" name="email" required>
                     </div>
                 </div>
                 <div class="mb-3 row">
                     <label for="username" class="col-sm-2 col-form-label">User Name</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" id="username" required>
+                        <input type="text" class="form-control" id="username" name="username" required>
                     </div>
                 </div>
                 <div class="mb-3 row">
                     <label for="mobile" class="col-sm-2 col-form-label">Mobile Number</label>
                     <div class="col-sm-10">
-                        <input type="number" class="form-control" id="mobile" required>
+                        <input type="number" class="form-control" id="mobile" name="mobile" required>
                     </div>
                 </div>
                 <div class="mb-3 row">
                     <label for="password" class="col-sm-2 col-form-label">Password</label>
                     <div class="col-sm-10">
-                        <input type="password" class="form-control" id="password" required>
+                        <input type="password" class="form-control" id="password" name="password" required>
                     </div>
                 </div>
                 <div class="mb-3 row">
                     <label for="confirmPassword" class="col-sm-2 col-form-label">Confirm Password</label>
                     <div class="col-sm-10">
-                        <input type="password" class="form-control" id="confirmPassword">
+                        <input type="password" class="form-control" name="confirmPassword" id="confirmPassword">
                     </div>
                 </div>
                 <input type="submit" class="btn btn-outline-success" />
                 <a href="/"><button type="button" class="btn btn-outline-primary">Cancel</button>
-            </div>
+            
             
         </form>
+    </div>
     </body>
 </html>
