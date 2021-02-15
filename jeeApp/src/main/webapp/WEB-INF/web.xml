@@ -44,8 +44,18 @@
     <url-pattern>/logout</url-pattern>   
 </servlet-mapping>
 
+<servlet>
+    <servlet-name>noteBookList</servlet-name>
+    <jsp-file>/views/noteBookList.jsp</jsp-file>
+</servlet>
+<!--mapping-->
+<servlet-mapping>
+    <servlet-name>noteBookList</servlet-name>
+    <url-pattern>/noteBookList</url-pattern>   
+</servlet-mapping>
+
 <error-page>
 		<exception-type>java.lang.Exception</exception-type>
-		<location>/Error.jsp</location>
+		<location>/error.jsp</location>
 	</error-page>
 </web-app>

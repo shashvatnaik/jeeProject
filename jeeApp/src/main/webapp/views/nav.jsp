@@ -306,6 +306,12 @@
     function closeNav() {
         document.getElementById("mySidenav").style.width = "0";
     }
+
+    function setAddInput(){
+        document.getElementById("type").value = "add";
+        document.getElementById("noteBookId").value=""
+        document.getElementById("noteBookName").value = "";
+    }
 </script>
 </head>
 <body>
@@ -339,7 +345,7 @@
             <ul class="nav nav-item d-flex gap-2">
             
                 <li style="margin-left: 10px;">
-                    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="setAddInput()">
                         Add New Note
                       </button>
                 </li>
@@ -380,8 +386,9 @@
             <div class="modal-body">
                 <label for="email" class="col-sm-6 col-form-label">Notebook Name:</label>
                     <div class="col-sm-10">
-                        <input type="hidden" name="type" value="addNoteBook">
-                        <input type="text" class="form-control" id="notBookName" name="noteBookName" placeholder="enter new notebook's name" required>
+                        <input id="type" type="hidden" name="type" value="add">
+                        <input id="noteBookId" type="hidden" name="noteBookId" value="">
+                        <input type="text" class="form-control" id="noteBookName" name="noteBookName" placeholder="enter new notebook's name" required>
                     </div>
             </div>
             <div class="modal-footer">

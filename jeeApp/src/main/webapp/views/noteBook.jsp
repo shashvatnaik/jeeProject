@@ -9,7 +9,6 @@
 	<link rel="stylesheet" href="main.css">
 <title>RemindMe</title>
 <% 
-System.out.println(session.getAttribute("uid"));
 if(session.getAttribute("uid") == null) { 
     response.sendRedirect("/");
 }
@@ -19,10 +18,10 @@ if(session.getAttribute("uid") == null) {
 
 <center>
 	<body style="background-color:#fafafa;">
-        <jsp:include page="views/nav.jsp" >
-		<jsp:param name="route" value="close" />
+        <jsp:include page="nav.jsp" >
+		    <jsp:param name="route" value="close" />
 	    </jsp:include>
-        <jsp:include page="/noteBook" />
+        <a href='/notes?noteBook=<%=(String)request.getAttribute("noteBookId") %>'><button class="btn btn-outline-success">Add Note</button></a>
     </body>
 </center>
 </html>
