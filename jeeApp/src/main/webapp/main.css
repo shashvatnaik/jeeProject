@@ -26,3 +26,7 @@
 .cursorPointer {
     cursor: pointer !important;
 }
+
+.float-right {
+    float: right;
+}

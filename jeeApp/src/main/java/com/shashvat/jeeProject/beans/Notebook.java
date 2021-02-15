@@ -89,6 +89,7 @@ public class Notebook {
         }
         return resultMap;
     }
+    
     public boolean deleteNoteBook(int id) {
         try{
             System.out.println("delete notebook userId"+this.uid+"and id = "+id);
@@ -122,8 +123,38 @@ public class Notebook {
         }
     }
 
-    public HashMap<String, String> getNoteBookDetails(){
-        HashMap<String, String> result = new HashMap<>();
+    public ArrayList getNoteBookDetails(int userId){
+        ArrayList<HashMap<String, String>> result = new ArrayList<>();
+
+        try{
+            JDBCUtils dbUtil = new JDBCUtils();
+            Connection conn = dbUtil.getConnection();
+            PreparedStatement pst = conn.prepareStatement("select * from NoteBook where id='"+this.id+"' and user_id='"+userId+"';");
+            ResultSet rs = pst.executeQuery();
+            int count = 0;
+            while(rs.next()){
+                count++;
+            }
+            if(count>0){
+                PreparedStatement st1 = conn.prepareStatement("select * from note where noteBook_id="+this.id+";");
+                ResultSet notesResult = st1.executeQuery();
+                while(notesResult.next()){
+                    HashMap<String, String> temp = new HashMap<>();
+                    temp.put("id", notesResult.getString("id"));
+                    temp.put("noteName", notesResult.getString("noteName"));
+                    temp.put("noteDescription", notesResult.getString("noteDescription"));
+                    temp.put("startDate", notesResult.getString("startDate"));
+                    temp.put("endDate", notesResult.getString("endDate"));
+                    temp.put("reminderDate", notesResult.getString("remainderDate"));
+                    temp.put("status", notesResult.getString("status_id"));
+                    temp.put("tag", notesResult.getString("tag_id"));
+                    result.add(temp);
+                }
+            }
+        } catch(Exception e){
+            e.printStackTrace();
+        }
+
         return result;
     }
 

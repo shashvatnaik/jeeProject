@@ -346,7 +346,7 @@
             
                 <li style="margin-left: 10px;">
                     <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="setAddInput()">
-                        Add New Note
+                        Add New Note Book
                       </button>
                 </li>
                     

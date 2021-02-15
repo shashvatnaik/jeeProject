@@ -31,7 +31,7 @@ public class NoteBookController extends HttpServlet {
             if(request.getParameter("id") != null){
                 System.out.println("notebook get with id= "+request.getParameter("id"));
                 Notebook ntb = new Notebook(Integer.parseInt(request.getParameter("id")));
-                //ntb.getNoteBookDetails();
+                request.setAttribute("notes", ntb.getNoteBookDetails(Integer.parseInt(""+session.getAttribute("uid"))));
                 request.setAttribute("noteBookId", request.getParameter("id"));
                 request.getServletContext().getRequestDispatcher("/views/noteBook.jsp").include(request, response);
             } else {
