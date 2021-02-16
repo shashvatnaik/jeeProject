@@ -107,7 +107,7 @@ public class Note{
         try{
             JDBCUtils dbUtil = new JDBCUtils();
             Connection conn = dbUtil.getConnection();
-            PreparedStatement pst = conn.prepareStatement("select * from NoteBook where id='"+this.noteBookId+"' and user_id='"+userId+"';");
+            PreparedStatement pst = conn.prepareStatement("select * from notebook where id='"+this.noteBookId+"' and user_id='"+userId+"';");
             ResultSet rs = pst.executeQuery();
             int count = 0;
             while(rs.next()){
@@ -138,7 +138,7 @@ public class Note{
         try{
             JDBCUtils dbUtil = new JDBCUtils();
             Connection conn = dbUtil.getConnection();
-            PreparedStatement pst = conn.prepareStatement("select * from NoteBook where id='"+this.noteBookId+"' and user_id='"+userId+"';");
+            PreparedStatement pst = conn.prepareStatement("select * from notebook where id='"+this.noteBookId+"' and user_id='"+userId+"';");
             ResultSet rs = pst.executeQuery();
             int count = 0;
             while(rs.next()){
@@ -163,7 +163,7 @@ public class Note{
         try{
             JDBCUtils dbUtil = new JDBCUtils();
             Connection conn = dbUtil.getConnection();
-            PreparedStatement pst = conn.prepareStatement("select * from NoteBook where id='"+this.noteBookId+"' and user_id='"+userId+"';");
+            PreparedStatement pst = conn.prepareStatement("select * from notebook where id='"+this.noteBookId+"' and user_id='"+userId+"';");
             ResultSet rs = pst.executeQuery();
             int count = 0;
             while(rs.next()){

@@ -53,13 +53,14 @@ if(session.getAttribute("uid") == null) {
             console.log("delete", id);
     		let xhr = new XMLHttpRequest();
 
-            fetch('/notes?type=deleteNote&id='+id+'&noteBookId=<%=(String)request.getAttribute("noteBookId")%>', {
+            fetch('${__SELF}/notes?type=deleteNote&id='+id+'&noteBookId=<%=(String)request.getAttribute("noteBookId")%>', {
                 method : "POST",
                 body: new FormData(),
             }).then((res) => {
-                if(res.status == 200){
-                    location.reload();
-                }
+                location.reload();
+            }).catch((e) => {
+                console.log(e);
+                location.reload();
             });
     	}
 </script>

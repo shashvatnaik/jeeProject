@@ -48,7 +48,7 @@ public class Notebook {
         try{
             JDBCUtils dbUtil = new JDBCUtils();
             Connection conn = dbUtil.getConnection();
-            PreparedStatement pst = conn.prepareStatement("select * from NoteBook where noteBookName='"+this.noteBookName+"' and user_id='"+this.uid+"';");
+            PreparedStatement pst = conn.prepareStatement("select * from notebook where noteBookName='"+this.noteBookName+"' and user_id='"+this.uid+"';");
             ResultSet rs = pst.executeQuery();
             int count = 0;
             while(rs.next()){
@@ -76,7 +76,7 @@ public class Notebook {
         try{
             JDBCUtils dbUtil = new JDBCUtils();
             Connection conn = dbUtil.getConnection();
-            PreparedStatement pst = conn.prepareStatement("select * from NoteBook where user_id='"+userId+"';");
+            PreparedStatement pst = conn.prepareStatement("select * from notebook where user_id='"+userId+"';");
             ResultSet rs = pst.executeQuery();
             int count = 0;
             
@@ -95,7 +95,7 @@ public class Notebook {
             System.out.println("delete notebook userId"+this.uid+"and id = "+id);
             JDBCUtils dbUtil = new JDBCUtils();
             Connection conn = dbUtil.getConnection();
-            PreparedStatement st1 = conn.prepareStatement("delete from NoteBook where id=? and user_id=?;");
+            PreparedStatement st1 = conn.prepareStatement("delete from notebook where id=? and user_id=?;");
             st1.setInt(1, id);
             st1.setInt(2, uid);
             st1.executeUpdate();
@@ -111,7 +111,7 @@ public class Notebook {
             JDBCUtils dbUtil = new JDBCUtils();
             Connection conn = dbUtil.getConnection();
             System.out.println("new name="+newName+"userid="+this.uid+" and id="+notebookId);
-            PreparedStatement st1 = conn.prepareStatement("update NoteBook set noteBookName=? where user_id=? and id=?;");
+            PreparedStatement st1 = conn.prepareStatement("update notebook set noteBookName=? where user_id=? and id=?;");
             st1.setString(1, newName);
             st1.setInt(2, this.uid);
             st1.setInt(3, notebookId);
@@ -129,7 +129,7 @@ public class Notebook {
         try{
             JDBCUtils dbUtil = new JDBCUtils();
             Connection conn = dbUtil.getConnection();
-            PreparedStatement pst = conn.prepareStatement("select * from NoteBook where id='"+this.id+"' and user_id='"+userId+"';");
+            PreparedStatement pst = conn.prepareStatement("select * from notebook where id='"+this.id+"' and user_id='"+userId+"';");
             ResultSet rs = pst.executeQuery();
             int count = 0;
             while(rs.next()){
