@@ -36,7 +36,7 @@ public class NotesController extends HttpServlet {
                 Status st = new Status();
                 request.setAttribute("status", st.getAllStatus());
 
-                request.getServletContext().getRequestDispatcher("/views/addnotes.jsp").include(request, response);
+                request.getServletContext().getRequestDispatcher("/views/addNotes.jsp").include(request, response);
             } else {
                 System.out.println("edit note - "+request.getParameter("noteBook"));
                 Note n = new Note();
@@ -53,7 +53,7 @@ public class NotesController extends HttpServlet {
                 request.setAttribute("noteDetails", n.getNoteDetails(Integer.parseInt(""+session.getAttribute("uid"))));
                 request.setAttribute("mode", "edit");
                 
-                request.getServletContext().getRequestDispatcher("/views/addnotes.jsp").include(request, response);
+                request.getServletContext().getRequestDispatcher("/views/addNotes.jsp").include(request, response);
             }
         } else {
             response.sendRedirect(request.getContextPath() + "/");
