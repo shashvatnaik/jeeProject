@@ -12,6 +12,14 @@ public class User {
         id=0;
     }
 
+    User(int id){
+        username = "";
+        mobile = "";
+        email = "";
+        password = "";
+        this.id = id;
+    }
+
     User(String u, String m, String e, String p){
         username = u;
         mobile = m;
@@ -85,6 +93,21 @@ public class User {
         } catch(Exception e){
             e.printStackTrace();
             return -1;
+        }
+    }
+
+    public boolean editUser(String newUserName, String newMobileNumber){
+        try{
+            JDBCUtils dbUtil = new JDBCUtils();
+            Connection conn = dbUtil.getConnection();
+            PreparedStatement st1 = conn.prepareStatement("update user set mobileNumber=?,userName=? where id=?;");
+            st1.setString(1, newMobileNumber);
+            st1.setString(2, newUserName);
+            st1.setInt(3, this.id);
+            return 1 == st1.executeUpdate();
+        } catch(Exception e){
+            e.printStackTrace();
+            return false;
         }
     }
 

@@ -6,46 +6,44 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
+import com.shashvat.jeeProject.beans.*;
 
 /* Servlet implementation class TestServlet*/
 @WebServlet(description = "user controller", urlPatterns = { "/user" })
 public class UserController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
     public UserController() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
     
-    /**
-	 * @see Servlet#init(ServletConfig)
-	 */
 	public void init(ServletConfig config) throws ServletException {
-		// TODO Auto-generated method stub
 	}
     
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		System.out.println("hello from servlet - get method");
-		response.getWriter().print("hello from servlet - get method ");
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		System.out.println("edit user");
+		
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
-		System.out.println("register method - gg value is "+request.getParameter("username"));
+		System.out.println("edit user method - gg value is "+request.getParameter("userName"));
+		HttpSession session=request.getSession();
+		if(session.getAttribute("uid") != null){
+			String newUserName = request.getParameter("userName");
+			String newMobileNumber = request.getParameter("mobileNumber");
+			User currentUser = new User(Integer.parseInt(""+session.getAttribute("uid")));
+			if(currentUser.editUser(newUserName, newMobileNumber)){
+				session.setAttribute("uname", newUserName);
+				session.setAttribute("umobile", newMobileNumber);
+				session.setAttribute("errorMessage", "User details successfully updated.");
+			} else {
+				session.setAttribute("errorMessage", "could not update user. ");
+			}
+			response.sendRedirect(request.getContextPath() + "/");
+		}
 	}
 
 }

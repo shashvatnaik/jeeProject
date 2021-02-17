@@ -325,13 +325,15 @@
                     <a class="navbar-brand" style="margin-left: 10px;" href="/">Notifier</a>
                     <div onmouseleave="closeNav()" id="mySidenav" class="sidenav" style="background-color: #293042;">
                         <a href="javascript:void(0)" class="closebtn" id="closeNav" onclick="closeNav()">&times;</a>
-                        <h3 style="color: white;">Hi ${user.getUserName() }</h3>
+                        <h3 style="color: white;">Hi <%=session.getAttribute("uname")%></h3>
                         <li><hr class="dropdown-divider"></li>
-                        <a id="noteBookView" href="noteBookList.do">NoteBooks</a> 
+                        <a id="noteBookView" href="/">Note Books</a> 
                         <li><hr class="dropdown-divider"></li>
-                        <a id="listOfNotes" href="listAllNotes.do">Notes</a> 
+                        <a id="listOfNotes" href="todaysNotes">Today's Notes</a> 
                         <li><hr class="dropdown-divider"></li>
-                        <a id="editUser" href="editUser.do">Edit User</a>
+                        <a href="/" id="editUser" data-bs-toggle="modal" data-bs-target="#userModal">Edit User</a>
+                        <li><hr class="dropdown-divider"></li>
+                        <a id="logout" href="logout">Logout</a>
                         <li><hr class="dropdown-divider"></li>
                     </div>
                 </ul>
@@ -399,6 +401,38 @@
         </div>
         </form>
       </div>
+
+      <div class="modal fade" id="userModal" tabindex="-1" aria-labelledby="userModalLabel" aria-hidden="true">
+        <form action="/user" method="POST">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="userModalLabel">Add Notebook</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <label for="email" class="col-sm-6 col-form-label">Email:</label>
+                <div class="col-sm-10">
+                    <input type="text" value='<%=session.getAttribute("uemail")%>' class="form-control" id="email" name="email" disabled required>
+                </div>
+                <label for="userName" class="col-sm-6 col-form-label">User Name:</label>
+                <div class="col-sm-10">
+                    <input type="text" value='<%=session.getAttribute("uname")%>' class="form-control" id="userName" name="userName" placeholder="enter new user name" required>
+                </div>
+                <label for="mobileNumber" class="col-sm-6 col-form-label">Mobile Number:</label>
+                <div class="col-sm-10">
+                    <input type="text" value='<%=session.getAttribute("umobile")%>' class="form-control" id="mobileNumber" name="mobileNumber" placeholder="enter new mobile number" required>
+                </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-primary">Save changes</button>
+            </div>
+          </div>
+        </div>
+        </form>
+      </div>
+
 
       <% if(session.getAttribute("errorMessage") != null && session.getAttribute("errorMessage") != "") { %>
           <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 5">
