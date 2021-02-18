@@ -38,20 +38,23 @@ public class NotesController extends HttpServlet {
 
                 request.getServletContext().getRequestDispatcher("/views/addNotes.jsp").include(request, response);
             } else {
-                System.out.println("edit note - "+request.getParameter("noteBook"));
+                System.out.println("edit note - "+request.getParameter("mode"));
                 Note n = new Note();
                 System.out.println(request.getParameter("note")+" - "+request.getParameter("noteBook"));
                 n.setId(Integer.parseInt(""+request.getParameter("note")));
                 n.setNoteBookId(Integer.parseInt(""+request.getParameter("noteBook")));
 
-                request.setAttribute("method", "edit");
+                if(request.getParameter("mode").equals("edit")){
+                    request.setAttribute("method", "edit");
+                } else {
+                    request.setAttribute("method", "view");
+                }
                 Tag tg = new Tag();
                 request.setAttribute("tags", tg.getAllTags());
                 Status st = new Status();
                 request.setAttribute("status", st.getAllStatus());
 
                 request.setAttribute("noteDetails", n.getNoteDetails(Integer.parseInt(""+session.getAttribute("uid"))));
-                request.setAttribute("mode", "edit");
                 
                 request.getServletContext().getRequestDispatcher("/views/addNotes.jsp").include(request, response);
             }

@@ -46,8 +46,10 @@ if(session.getAttribute("uid") == null) {
 	    </jsp:include>
         <% if(request.getAttribute("method").equals("add")) { %>
             <h3 class="txtColor">Add Note:</h3>
+        <% } else if(request.getAttribute("method").equals("edit")) { %>
+            <h3 class="txtColor">Edit Note:</h3>
         <% } else { %>
-            <h3 class="txtColor">Add Note:</h3>
+            <h3 class="txtColor">View Note:</h3>
         <% } %>
         <div class="card">
             <form action="/notes"  method="POST">
@@ -110,12 +112,11 @@ if(session.getAttribute("uid") == null) {
                               </select>
                         </div>
                     </div>
-                    <button type="submit" class="btn btn-outline-success" > 
-                        <% if(request.getAttribute("method").equals("add")) {%>
-                            Add Note 
-                        <% } else { %>
-                            Edit Note
-                        <% } %>
+                    <% if(request.getAttribute("method").equals("add")) {%>
+                        <button id="submitBtn" type="submit" class="btn btn-outline-success" > Add Note </button>
+                    <% } else if(request.getAttribute("method").equals("edit")) { %>
+                        <button id="submitBtn" type="submit" class="btn btn-outline-success" > Edit Note </button>
+                    <% } %>
                     </button>
                     <button type="button" onclick="window.history.back()" class="btn btn-outline-primary">Cancel</button>
                 
@@ -124,4 +125,16 @@ if(session.getAttribute("uid") == null) {
         </div>
     </body>
 </center>
+
+<script>
+    <% if(request.getAttribute("method").equals("view")) { %>
+        document.getElementById("noteName").disabled = true;
+        document.getElementById("noteDescription").disabled = true;
+        document.getElementById("startDate").disabled = true;
+        document.getElementById("endDate").disabled = true;
+        document.getElementById("reminderDate").disabled = true;
+        document.getElementById("tag").disabled = true;
+        document.getElementById("status").disabled = true;
+    <% } %>
+</script>
 </html>

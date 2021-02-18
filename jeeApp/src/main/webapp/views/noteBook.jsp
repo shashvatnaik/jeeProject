@@ -38,7 +38,10 @@ if(session.getAttribute("uid") == null) {
                 </p>
                 </div>
                 <div >
-                    <a href='/notes?noteBook=<%=(String)request.getAttribute("noteBookId") %>&note=<%=(String)m.get("id")%>'>
+                    <a href='/notes?noteBook=<%=(String)request.getAttribute("noteBookId") %>&note=<%=(String)m.get("id")%>&mode=view'>
+                        <button class="btn btn-outline-success">View</button>
+                    </a>
+                    <a href='/notes?noteBook=<%=(String)request.getAttribute("noteBookId") %>&note=<%=(String)m.get("id")%>&mode=edit'>
                         <button class="btn btn-outline-warning">Edit</button>
                     </a>
                     <button class="btn btn-outline-danger" onclick='deleteNote(<%=m.get("id")%>)'>Delete</button>
