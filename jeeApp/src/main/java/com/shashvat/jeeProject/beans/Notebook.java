@@ -148,6 +148,7 @@ public class Notebook {
                     temp.put("reminderDate", notesResult.getString("remainderDate"));
                     temp.put("status", notesResult.getString("status_id"));
                     temp.put("tag", notesResult.getString("tag_id"));
+                    temp.put("noteBook_id", notesResult.getString("noteBook_id"));
                     result.add(temp);
                 }
             }
@@ -155,6 +156,40 @@ public class Notebook {
             e.printStackTrace();
         }
 
+        return result;
+    }
+
+    public ArrayList getTodaysNotes(int userId){
+        ArrayList<HashMap<String, String>> result = new ArrayList<>();
+        try{
+            JDBCUtils dbUtil = new JDBCUtils();
+            Connection conn = dbUtil.getConnection();
+            PreparedStatement st1 = conn.prepareStatement("select * from notebook where user_id=?;");
+            st1.setInt(1, userId);
+            ResultSet noteBookResult = st1.executeQuery();
+            while(noteBookResult.next()){
+                PreparedStatement st2 = conn.prepareStatement("select * from note where noteBook_id=? and startDate<? and endDate>?;");
+                st2.setInt(1, noteBookResult.getInt("id"));
+                st2.setDate(2, new java.sql.Date(System.currentTimeMillis()));
+                st2.setDate(3, new java.sql.Date(System.currentTimeMillis()));
+                ResultSet notesResult = st2.executeQuery();
+                while(notesResult.next()){
+                    HashMap<String, String> temp = new HashMap<>();
+                    temp.put("id", notesResult.getString("id"));
+                    temp.put("noteName", notesResult.getString("noteName"));
+                    temp.put("noteDescription", notesResult.getString("noteDescription"));
+                    temp.put("startDate", notesResult.getString("startDate"));
+                    temp.put("endDate", notesResult.getString("endDate"));
+                    temp.put("reminderDate", notesResult.getString("remainderDate"));
+                    temp.put("status", notesResult.getString("status_id"));
+                    temp.put("tag", notesResult.getString("tag_id"));
+                    temp.put("noteBook_id", notesResult.getString("noteBook_id"));
+                    result.add(temp);
+                }
+            }
+        } catch(Exception e){
+            e.printStackTrace();
+        }
         return result;
     }
 

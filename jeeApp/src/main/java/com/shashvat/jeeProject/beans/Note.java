@@ -85,7 +85,7 @@ public class Note{
         try{
             JDBCUtils dbUtil = new JDBCUtils();
             Connection conn = dbUtil.getConnection();
-            PreparedStatement st1 = conn.prepareStatement("insert into note values(?, ?, ?, ?, ?, ?, ?, ?, ?);");
+            PreparedStatement st1 = conn.prepareStatement("insert into note values(?, ?, ?, ?, ?, ?, ?, ?, ?);", Statement.RETURN_GENERATED_KEYS);
             st1.setString(1, null);
             st1.setString(2, this.endDate);
             st1.setString(3, this.description);
@@ -96,6 +96,9 @@ public class Note{
             st1.setInt(8, this.status);
             st1.setInt(9, this.tag);
             st1.executeUpdate();
+            ResultSet rs = st1.getGeneratedKeys();
+            if(rs.next())
+                this.id = rs.getInt(1);
             return true;
         } catch(Exception e){
             e.printStackTrace();

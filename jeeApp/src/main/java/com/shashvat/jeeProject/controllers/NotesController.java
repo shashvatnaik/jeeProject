@@ -47,6 +47,10 @@ public class NotesController extends HttpServlet {
                 if(request.getParameter("mode").equals("edit")){
                     request.setAttribute("method", "edit");
                 } else {
+                    Notification nt = new Notification();
+                    nt.setNoteBookId(n.getNoteBookId());
+                    nt.setNoteId(n.getId());
+                    nt.markRead();
                     request.setAttribute("method", "view");
                 }
                 Tag tg = new Tag();
@@ -77,8 +81,21 @@ public class NotesController extends HttpServlet {
                 n.setReminderDate(request.getParameter("reminderDate"));
                 n.setTag(Integer.parseInt(request.getParameter("tag")));
                 n.setStatus(Integer.parseInt(request.getParameter("status")));
+                
+
                 if(n.addNewNote()){
-                    session.setAttribute("errorMessage", "Note added successfully with name : "+n.getName());
+                    Notification nt = new Notification();
+                    nt.setNoteBookId(Integer.parseInt(request.getParameter("noteBookId")));
+                    nt.setNoteId(n.getId());
+                    nt.setText(n.getName());
+                    nt.setDate(n.getReminderDate());
+                    nt.setUserId(Integer.parseInt(""+session.getAttribute("uid")));
+                    if(nt.addNotification()){
+                        session.setAttribute("errorMessage", "Note added successfully with name : "+n.getName());
+                    } else {
+                        session.setAttribute("errorMessage", "problem genereating notification: "+n.getId());
+                    }
+                    
                 } else {
                     session.setAttribute("errorMessage", "coud not process add notes request");
                 }
@@ -88,7 +105,14 @@ public class NotesController extends HttpServlet {
                 n.setId(Integer.parseInt(""+request.getParameter("id")));
                 n.setNoteBookId(Integer.parseInt(""+request.getParameter("noteBookId")));
                 if(n.deleteNote(Integer.parseInt(""+session.getAttribute("uid")))){
-                    session.setAttribute("errorMessage", "Note added successfully with name : "+n.getName());
+                    Notification nt = new Notification();
+                    nt.setNoteBookId(n.getNoteBookId());
+                    nt.setNoteId(n.getId());
+                    if(nt.deleteNotification()){
+                        session.setAttribute("errorMessage", "Note added successfully with name : "+n.getName());
+                    } else {
+                        session.setAttribute("errorMessage", "Error in deleting notification "+n.getName());
+                    }
                 } else {
                     session.setAttribute("errorMessage", "could not process delete request"+n.getName());
                 }
@@ -106,7 +130,16 @@ public class NotesController extends HttpServlet {
                 n.setTag(Integer.parseInt(request.getParameter("tag")));
                 n.setStatus(Integer.parseInt(request.getParameter("status")));
                 if(n.editNote(Integer.parseInt(""+session.getAttribute("uid")))){
-                    session.setAttribute("errorMessage", "Note edited successfully with name : "+n.getName());
+                    Notification nt = new Notification();
+                    nt.setDate(n.getReminderDate());
+                    nt.setText(n.getName());
+                    nt.setNoteBookId(n.getNoteBookId());
+                    nt.setNoteId(n.getId());
+                    if(nt.editNotification(nt)){
+                        session.setAttribute("errorMessage", "Note edited successfully with name : "+n.getName());    
+                    } else {
+                        session.setAttribute("errorMessage", "Error in generating notification "+n.getName());
+                    }
                 } else {
                     session.setAttribute("errorMessage", "coud not process add notes request");
                 }

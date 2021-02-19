@@ -26,9 +26,15 @@ if(session.getAttribute("uid") == null) {
 		    <jsp:param name="route" value="close" />
 	    </jsp:include>
         <div>
-            <h3 class="txtColor">Notes:</h3>
+            <% if((String)request.getAttribute("noteBookId") != null){ %>
+                <h3 class="txtColor">Notes:</h3>
+            <% } else { %>
+                <h3 class="txtColor">Today's Notes:</h3>
+            <% } %>
             <a href='/home'><button class="btn btn-outline-primary float-sm-right">Go Back</button></a>
-            <a href='/notes?noteBook=<%=(String)request.getAttribute("noteBookId") %>'><button class="btn btn-outline-success float-sm-right">Add Note</button></a>
+            <% if((String)request.getAttribute("noteBookId") != null){ %>
+                <a href='/notes?noteBook=<%=(String)request.getAttribute("noteBookId") %>'><button class="btn btn-outline-success float-sm-right">Add Note</button></a>
+            <% } %>
         </div>
         <% for(HashMap<String, String> m: notes){ %>
             <div class="card row">
@@ -38,10 +44,10 @@ if(session.getAttribute("uid") == null) {
                 </p>
                 </div>
                 <div >
-                    <a href='/notes?noteBook=<%=(String)request.getAttribute("noteBookId") %>&note=<%=(String)m.get("id")%>&mode=view'>
+                    <a href='/notes?noteBook=<%=(String)m.get("noteBook_id") %>&note=<%=(String)m.get("id")%>&mode=view'>
                         <button class="btn btn-outline-success">View</button>
                     </a>
-                    <a href='/notes?noteBook=<%=(String)request.getAttribute("noteBookId") %>&note=<%=(String)m.get("id")%>&mode=edit'>
+                    <a href='/notes?noteBook=<%=(String)m.get("noteBook_id") %>&note=<%=(String)m.get("id")%>&mode=edit'>
                         <button class="btn btn-outline-warning">Edit</button>
                     </a>
                     <button class="btn btn-outline-danger" onclick='deleteNote(<%=m.get("id")%>)'>Delete</button>

@@ -54,6 +54,16 @@
     <url-pattern>/noteBookList</url-pattern>   
 </servlet-mapping>
 
+<servlet>
+    <servlet-name>notifications</servlet-name>
+    <jsp-file>/views/notifications.jsp</jsp-file>
+</servlet>
+<!--mapping-->
+<servlet-mapping>
+    <servlet-name>notifications</servlet-name>
+    <url-pattern>/notificationsView</url-pattern>   
+</servlet-mapping>
+
 <error-page>
 		<exception-type>java.lang.Exception</exception-type>
 		<location>/error.jsp</location>

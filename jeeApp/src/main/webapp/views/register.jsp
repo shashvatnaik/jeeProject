@@ -20,6 +20,7 @@
     </head>
     <body style="background-color:#fafafa;">
     <center>
+        <h3>Register</h3>
         <div class="card" style="width: 60rem; top:6rem;">
         <form action="/app"  method="POST">
             <input type="hidden" name="type" value="register" />
