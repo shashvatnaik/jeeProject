@@ -50,19 +50,28 @@ public class App extends HttpServlet {
 		System.out.println("inside post"+request.getParameter("type"));
 		if(request.getParameter("type").equals("register")){
 			System.out.println("inside post-register");
-			User newUser = new User(request.getParameter("username"), request.getParameter("mobile"), request.getParameter("email"), request.getParameter("password"));
-			int result = newUser.registerUser();
-			if(result == 1){
-				System.out.println("New User Added: "+request.getParameter("email"));
-				request.setAttribute("message", "Registration Successfull!");
-				request.getServletContext().getRequestDispatcher("/index.jsp").forward(request, response);
-			} else if(result == 0) {
-				request.setAttribute("message", "User with the email already exists!");
+			if(!request.getParameter("password").equals(request.getParameter("confirmPassword"))){
+				request.setAttribute("message", "Passwords do not match!");
+				request.getServletContext().getRequestDispatcher("/register").forward(request, response);
+			} else if(request.getParameter("mobile").length() != 10 ){
+				request.setAttribute("message", "mobile number should be 10 digits!");
 				request.getServletContext().getRequestDispatcher("/register").forward(request, response);
 			} else {
-				System.out.println("error in registering the user");
-				response.sendRedirect("/register");
+				User newUser = new User(request.getParameter("username"), request.getParameter("mobile"), request.getParameter("email"), request.getParameter("password"));
+				int result = newUser.registerUser();
+				if(result == 1){
+					System.out.println("New User Added: "+request.getParameter("email"));
+					request.setAttribute("message", "Registration Successfull!");
+					request.getServletContext().getRequestDispatcher("/index.jsp").forward(request, response);
+				} else if(result == 0) {
+					request.setAttribute("message", "User with the email already exists!");
+					request.getServletContext().getRequestDispatcher("/register").forward(request, response);
+				} else {
+					System.out.println("error in registering the user");
+					response.sendRedirect("/register");
+				}
 			}
+			
 		} else {
 			try{
 				JDBCUtils dbUtil = new JDBCUtils();
@@ -95,6 +104,7 @@ public class App extends HttpServlet {
 				e.printStackTrace();
 			}
 		}
+
 
 	}
 
